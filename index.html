@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La suma de las partes: 10 videos para Estructuras</title>
+<meta name="description" content="Diez videos verticales sobre la evolución del logo de Estructuras, de 1972 a hoy. Preparado por Sebastián.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F5F6FF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --off: #F5F6FF; --grey: #DCDFE5; --dark: #202022; --orange: #E7A33E; --terra: #C66251;
+    --gutter: 16px; --line: 1px;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--off); color: var(--dark);
+    font: 400 1rem/1.5 "Work Sans", system-ui, sans-serif;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* top line: who it is for, when */
+  .top {
+    display: flex; justify-content: space-between; gap: 1rem;
+    padding: 14px 0; border-bottom: var(--line) solid var(--grey); font-size: .875rem;
+  }
+
+  /* hero: the brand slogan as the one big light title, set on the guide's hairline grid */
+  .hero { display: grid; grid-template-columns: 1fr; border-bottom: var(--line) solid var(--grey); }
+  .hero h1 {
+    margin: 0; padding: 40px 0 28px;
+    font-weight: 300; text-transform: uppercase; letter-spacing: -.01em;
+    font-size: clamp(2.75rem, 13.5vw, 7.5rem); line-height: .94;
+  }
+  .hero h1 span { display: block; }
+  .hero .intro { padding: 0 0 32px; max-width: 34rem; }
+  .hero .lead { font-size: 1.25rem; line-height: 1.35; margin: 0 0 14px; }
+  .hero .intro p { margin: 0 0 10px; }
+  .hero .how { display: inline-flex; align-items: center; gap: 10px; font-weight: 500; margin-top: 8px; }
+  .hero .how::before { content: ""; width: 14px; height: 14px; border-radius: 3px; background: var(--orange); }
+  @media (min-width: 900px) {
+    .hero { grid-template-columns: 1.6fr 1fr; }
+    .hero h1 { padding: 72px 32px 56px 0; border-right: var(--line) solid var(--grey); }
+    .hero .intro { padding: 72px 0 56px 32px; align-self: end; }
+  }
+
+  /* the grid of videos: posters are each video's own logo, so the grid reads 1972 -> today */
+  .grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: var(--line); background: var(--grey); border-bottom: var(--line) solid var(--grey);
+  }
+  @media (min-width: 720px) { .grid { grid-template-columns: repeat(5, 1fr); } }
+  .grid li { background: var(--off); padding: 12px 10px 18px; }
+  .card {
+    display: block; width: 100%; padding: 0; border: 0; background: none; color: inherit;
+    font: inherit; text-align: left; cursor: pointer;
+  }
+  .card img {
+    display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover;
+    border-radius: 6px; background: var(--grey);
+  }
+  .cap { display: flex; align-items: baseline; gap: 8px; margin-top: 10px; }
+  .num { font-weight: 300; font-size: 1.5rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .name { font-weight: 500; font-size: 1rem; line-height: 1.2; }
+  .line { margin: 6px 0 0; font-size: .8125rem; line-height: 1.4; }
+  .card:hover img { outline: 3px solid var(--orange); outline-offset: -3px; }
+  .card:focus-visible { outline: 3px solid var(--dark); outline-offset: 4px; border-radius: 6px; }
+
+  .foot { padding: 28px 0 44px; font-size: .875rem; max-width: 40rem; }
+  .foot p { margin: 0 0 6px; }
+
+  /* the viewer: the guide's dark cover, the video as large as the screen allows */
+  dialog.viewer {
+    width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none;
+    margin: 0; padding: 0; border: 0; background: var(--dark); color: var(--off);
+  }
+  dialog.viewer::backdrop { background: var(--dark); }
+  .stage {
+    height: 100%; display: grid; grid-template-rows: auto 1fr auto;
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  }
+  .vbar { display: flex; align-items: center; gap: 12px; padding: 10px var(--gutter); min-height: 56px; }
+  .vbar .vt { flex: 1; display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+  .vt .num { font-size: 1.375rem; }
+  .vt .name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* the video takes the largest 9:16 box that fits the space between the bars */
+  .frame { min-height: 0; display: grid; place-items: center; padding: 0 var(--gutter); container-type: size; }
+  .vid { position: relative; width: min(100cqw, 100cqh * 9 / 16); aspect-ratio: 9 / 16; }
+  .vid video { display: block; width: 100%; height: 100%; object-fit: contain; background: #000; border-radius: 8px; }
+  .progress { position: absolute; left: 8px; right: 8px; bottom: 6px; height: 3px; background: var(--orange);
+    transform: scaleX(0); transform-origin: left center; border-radius: 2px; pointer-events: none; }
+  .bigplay {
+    position: absolute; inset: 0; margin: auto; width: 84px; height: 84px; border-radius: 50%;
+    border: 0; background: var(--orange); color: var(--dark); display: none; place-items: center; cursor: pointer;
+  }
+  .bigplay.on { display: grid; }
+  .ibtn {
+    width: 48px; height: 48px; display: inline-grid; place-items: center; border-radius: 10px;
+    border: var(--line) solid #3a3a3e; background: transparent; color: var(--off); cursor: pointer;
+  }
+  .ibtn:focus-visible, .dl:focus-visible, .bigplay:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+  .ibtn svg, .bigplay svg { width: 22px; height: 22px; }
+  .controls { justify-content: space-between; }
+  .dl {
+    display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 16px; border-radius: 10px;
+    background: var(--off); color: var(--dark); text-decoration: none; font-weight: 500; font-size: .9375rem;
+  }
+  .dl small { font-weight: 400; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><span>Para Estructuras S.A.</span><span>Octubre de 2026</span></div>
+
+  <header class="hero">
+    <h1><span>La suma</span><span>de las</span><span>partes</span></h1>
+    <div class="intro">
+      <p class="lead">Diez videos sobre los diez logos de Estructuras, de 1972 a hoy.</p>
+      <p>Cada uno recorre toda la historia del logo en un estilo distinto y vuelve a empezar sin corte, para publicarse
+        en bucle en Reels o Shorts. Son verticales, duran unos 25 segundos y tienen sonido.</p>
+      <p class="how">Toque un video para verlo con sonido.</p>
+    </div>
+  </header>
+
+  <main>
+    <h2 class="sr">Los 8 videos</h2>
+    <ul class="grid">
+      <li><button class="card" type="button" data-i="0" aria-label="Ver Fundición con sonido"><img src="posters/02_fundicion.jpg" alt="" width="540" height="960" loading="eager"><span class="cap"><span class="num">02</span><span class="name">Fundición</span></span></button><p class="line">El metal se funde, corre y se enfría en la forma del siguiente logo.</p></li>
+      <li><button class="card" type="button" data-i="1" aria-label="Ver Columnas con sonido"><img src="posters/03_columnas.jpg" alt="" width="540" height="960" loading="eager"><span class="cap"><span class="num">03</span><span class="name">Columnas</span></span></button><p class="line">Miles de columnas suben y bajan en una maqueta blanca mientras el sol la recorre.</p></li>
+      <li><button class="card" type="button" data-i="2" aria-label="Ver Del plano a la obra con sonido"><img src="posters/04_plano_a_obra.jpg" alt="" width="540" height="960" loading="eager"><span class="cap"><span class="num">04</span><span class="name">Del plano a la obra</span></span></button><p class="line">Cada logo se dibuja como un plano y se levanta en concreto.</p></li>
+      <li><button class="card" type="button" data-i="3" aria-label="Ver Anamorfosis con sonido"><img src="posters/05_anamorfosis.jpg" alt="" width="540" height="960" loading="eager"><span class="cap"><span class="num">05</span><span class="name">Anamorfosis</span></span></button><p class="line">Piezas sueltas en el espacio forman el logo solo desde un punto exacto.</p></li>
+      <li><button class="card" type="button" data-i="4" aria-label="Ver Grilla con sonido"><img src="posters/06_grilla.jpg" alt="" width="540" height="960" loading="lazy"><span class="cap"><span class="num">06</span><span class="name">Grilla</span></span></button><p class="line">El sistema de marca en movimiento: celdas que se deslizan hasta armar cada logo.</p></li>
+      <li><button class="card" type="button" data-i="5" aria-label="Ver Imprenta con sonido"><img src="posters/07_imprenta.jpg" alt="" width="540" height="960" loading="lazy"><span class="cap"><span class="num">07</span><span class="name">Imprenta</span></span></button><p class="line">Tinta, papel y semitono: cada logo se imprime sobre el anterior.</p></li>
+      <li><button class="card" type="button" data-i="6" aria-label="Ver Árido con sonido"><img src="posters/09_arido.jpg" alt="" width="540" height="960" loading="lazy"><span class="cap"><span class="num">09</span><span class="name">Árido</span></span></button><p class="line">Granos de arena y cemento que el viento lleva de un logo al otro.</p></li>
+      <li><button class="card" type="button" data-i="7" aria-label="Ver Línea de tiza con sonido"><img src="posters/10_linea_de_tiza.jpg" alt="" width="540" height="960" loading="lazy"><span class="cap"><span class="num">10</span><span class="name">Línea de tiza</span></span></button><p class="line">Una sola línea continua dibuja cada logo y se desenreda para el siguiente.</p></li>
+    </ul>
+  </main>
+
+  <footer class="foot">
+    <p>Cada video se puede descargar desde el reproductor, listo para subir a Instagram o YouTube.</p>
+    <p>Preparado por Sebastián para Estructuras S.A.</p>
+  </footer>
+</div>
+
+<dialog class="viewer" aria-label="Reproductor">
+  <div class="stage">
+    <div class="vbar">
+      <div class="vt"><span class="num" id="vnum"></span><span class="name" id="vname"></span></div>
+      <button class="ibtn" id="mute" type="button" aria-label="Silenciar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="w1" d="M16.5 9a4 4 0 0 1 0 6"/><path class="w2" d="M19 6.5a7.5 7.5 0 0 1 0 11"/><path class="x" d="M17 9l5 6M22 9l-5 6" style="display:none"/></svg>
+      </button>
+      <button class="ibtn" id="close" type="button" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="frame">
+      <div class="vid">
+        <video id="video" playsinline loop preload="metadata"></video>
+        <div class="progress" id="prog"></div>
+        <button class="bigplay" id="bigplay" type="button" aria-label="Reproducir">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="vbar controls">
+      <button class="ibtn" id="prev" type="button" aria-label="Video anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <a class="dl" id="dl" href="#" download>Descargar <small id="dlmb"></small></a>
+      <button class="ibtn" id="next" type="button" aria-label="Video siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+// Player checked on a real phone (Sebz, Android Chrome incognito, 2026-10-22: open, play with sound, swipe, mute,
+// download, close). A change here that could affect playback needs a new real-phone check; see DECISIONS.md.
+(() => {
+  const DATA = [{"n": 2, "slug": "02_fundicion", "title": "Fundición", "mb": 11.8}, {"n": 3, "slug": "03_columnas", "title": "Columnas", "mb": 11.0}, {"n": 4, "slug": "04_plano_a_obra", "title": "Del plano a la obra", "mb": 3.3}, {"n": 5, "slug": "05_anamorfosis", "title": "Anamorfosis", "mb": 6.7}, {"n": 6, "slug": "06_grilla", "title": "Grilla", "mb": 6.4}, {"n": 7, "slug": "07_imprenta", "title": "Imprenta", "mb": 9.7}, {"n": 9, "slug": "09_arido", "title": "Árido", "mb": 15.7}, {"n": 10, "slug": "10_linea_de_tiza", "title": "Línea de tiza", "mb": 3.5}];
+  const $ = (id) => document.getElementById(id);
+  const dlg = document.querySelector("dialog.viewer"), v = $("video"), prog = $("prog"), big = $("bigplay");
+  let cur = 0, raf = 0;
+
+  function show(i) {
+    cur = (i + DATA.length) % DATA.length;
+    const d = DATA[cur];
+    $("vnum").textContent = String(d.n).padStart(2, "0");
+    $("vname").textContent = d.title;
+    $("dl").href = "videos/" + d.slug + ".mp4";
+    $("dl").setAttribute("download", "Estructuras " + String(d.n).padStart(2, "0") + " " + d.title + ".mp4");
+    $("dlmb").textContent = "(" + String(d.mb).replace(".", ",") + " MB)";
+    v.poster = "posters/" + d.slug + ".jpg";
+    v.src = "videos/" + d.slug + ".mp4";
+    play();
+  }
+  function play() {
+    const p = v.play();
+    big.classList.remove("on");
+    if (p) p.catch(() => big.classList.add("on"));   // the browser wants another tap
+  }
+  function tick() {
+    prog.style.transform = "scaleX(" + (v.duration ? v.currentTime / v.duration : 0) + ")";
+    raf = requestAnimationFrame(tick);
+  }
+  function open(i) {
+    if (!dlg.open) dlg.showModal();
+    show(i);
+    cancelAnimationFrame(raf); tick();
+  }
+  function close() {
+    v.pause(); v.removeAttribute("src"); v.load();
+    cancelAnimationFrame(raf);
+    if (dlg.open) dlg.close();
+  }
+  function setMute(m) {
+    v.muted = m;
+    $("mute").setAttribute("aria-label", m ? "Activar sonido" : "Silenciar");
+    $("mute").querySelector(".x").style.display = m ? "" : "none";
+    $("mute").querySelectorAll(".w1,.w2").forEach((e) => (e.style.display = m ? "none" : ""));
+  }
+
+  document.querySelectorAll(".card").forEach((b) => b.addEventListener("click", () => open(+b.dataset.i)));
+  $("close").addEventListener("click", close);
+  dlg.addEventListener("close", () => { v.pause(); cancelAnimationFrame(raf); });
+  $("prev").addEventListener("click", () => show(cur - 1));
+  $("next").addEventListener("click", () => show(cur + 1));
+  $("mute").addEventListener("click", () => setMute(!v.muted));
+  big.addEventListener("click", play);
+  v.addEventListener("click", () => (v.paused ? play() : (v.pause(), big.classList.add("on"))));
+  document.addEventListener("keydown", (e) => {
+    if (!dlg.open) return;
+    if (e.key === "ArrowRight") show(cur + 1);
+    else if (e.key === "ArrowLeft") show(cur - 1);
+    else if (e.key === " " && e.target === document.body) { e.preventDefault(); v.paused ? play() : v.pause(); }
+  });
+  let x0 = null;   // swipe left/right for the next/previous video
+  v.addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
+  v.addEventListener("touchend", (e) => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 60) { e.preventDefault(); show(cur + (dx < 0 ? 1 : -1)); }
+  });
+})();
+</script>
+</body>
+</html>
